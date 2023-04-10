@@ -1,0 +1,16 @@
+### Get all comments
+
+GET http://localhost:4001/posts/navitest/comments
+
+
+
+### Create new comment for a post
+
+
+POST http://localhost:4001/posts/navitest/comments
+Content-Type: application/json
+
+{
+    "content":"This is the first comment for post id : navitest"
+}
+
