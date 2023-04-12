@@ -12,7 +12,7 @@ app.post("/events",(req,res)=>{
     axios({
         method: 'post',
         url: 'http://127.0.0.1:4000/events',
-        data: req.body.data
+        data: req.body
       }).then(r=>{
         console.log("send")
     }).catch(e=>{
@@ -23,7 +23,7 @@ app.post("/events",(req,res)=>{
     axios({
         method: 'post',
         url: 'http://127.0.0.1:4001/events',
-        data: req.body.data
+        data: req.body
       }).then(r=>{
         console.log("send")
     }).catch(e=>{
