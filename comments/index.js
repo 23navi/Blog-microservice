@@ -2,9 +2,11 @@ const express = require("express");
 const { randomBytes } = require("crypto");
 const bodyParser = require("body-parser");
 const cors= require("cors")
+const axios= require("axios")
 const app = express();
 app.use(bodyParser.json());
 app.use(cors())
+
 
 const commentsByPostId = {};
 
@@ -20,8 +22,23 @@ app.post("/posts/:id/comments", (req, res) => {
   comments.push({ id: commentId, content: req.body.content });
   commentsByPostId[postId] = comments;
 
+  axios.post("http://127.0.0.1:4005/events",{
+    tyep:"CommentCreated",
+    data:{
+      commentId,
+      postId,
+      comment:req.body.content,
+    }
+  })
   res.status(201).send(commentsByPostId[postId]);
 });
+
+
+app.post("/events",(req,res)=>{
+  console.log(req.body)
+  res.send({})
+})
+
 
 app.listen(4001, () => {
   console.log("Comments on port 4001");
