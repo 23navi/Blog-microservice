@@ -28,7 +28,7 @@ app.post("/posts",(req,res)=>{
         method: 'post',
         url: 'http://127.0.0.1:4005/events',
         data: {
-            tyep:"CommentCreated",
+            type:"PostCreated",
             data:{
               id,
               title,
