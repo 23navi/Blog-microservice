@@ -9,26 +9,34 @@ app.use(cors())
 
 app.post("/events",(req,res)=>{
 
+    //To post service
     axios({
         method: 'post',
         url: 'http://127.0.0.1:4000/events',
         data: req.body
-      }).then(r=>{
-        console.log("send")
-    }).catch(e=>{
-        console.log("error");
+      }).catch(e=>{
+        console.log("error post");
         console.log(e.message)
     });
 
+    //To comments service
     axios({
         method: 'post',
         url: 'http://127.0.0.1:4001/events',
         data: req.body
-      }).then(r=>{
-        console.log("send")
-    }).catch(e=>{
-        console.log("error");
+      }).catch(e=>{
+        console.log("error comment");
     });
+
+    //To query service
+    axios({
+        method: 'post',
+        url: 'http://127.0.0.1:4002/events',
+        data: req.body
+      }).catch(e=>{
+        console.log("error query");
+    });
+
     res.send("Ok");
 })
 

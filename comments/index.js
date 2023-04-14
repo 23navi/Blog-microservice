@@ -23,11 +23,11 @@ app.post("/posts/:id/comments", (req, res) => {
   commentsByPostId[postId] = comments;
 
   axios.post("http://127.0.0.1:4005/events",{
-    tyep:"CommentCreated",
+    type:"CommentCreated",
     data:{
       commentId,
       postId,
-      comment:req.body.content,
+      content:req.body.content,
     }
   })
   res.status(201).send(commentsByPostId[postId]);
