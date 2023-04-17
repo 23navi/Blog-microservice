@@ -37,6 +37,16 @@ app.post("/events",(req,res)=>{
         console.log("error query");
     });
 
+
+    //To moderation service
+    axios({
+      method: 'post',
+      url: 'http://127.0.0.1:4003/events',
+      data: req.body
+    }).catch(e=>{
+      console.log("error query");
+  });
+
     res.send("Ok");
 })
 
