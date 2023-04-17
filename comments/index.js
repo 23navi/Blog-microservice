@@ -19,7 +19,7 @@ app.post("/posts/:id/comments", (req, res) => {
   const commentId = randomBytes(4).toString();
   const postId = req.params.id;
   const comments = commentsByPostId[postId] || [];
-  comments.push({ id: commentId, content: req.body.content });
+  comments.push({ id: commentId, content: req.body.content, status:"pending" });
   commentsByPostId[postId] = comments;
 
   axios.post("http://127.0.0.1:4005/events",{
@@ -28,6 +28,7 @@ app.post("/posts/:id/comments", (req, res) => {
       commentId,
       postId,
       content:req.body.content,
+      status:"pending",
     }
   })
   res.status(201).send(commentsByPostId[postId]);
@@ -35,7 +36,8 @@ app.post("/posts/:id/comments", (req, res) => {
 
 
 app.post("/events",(req,res)=>{
-  console.log(req.body)
+  //We will listen for CommentModeration event
+  
   res.send({})
 })
 

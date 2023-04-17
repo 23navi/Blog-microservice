@@ -12,25 +12,24 @@ app.get("/posts", (req, res) => {
 });
 
 app.post("/events", (req, res) => {
-    
-    console.log(req.body);
   const { type, data } = req.body;
-  if (type == "CommentCreated") {
-    console.log("This is hit at commentcreated")
-    console.log(post_with_comments[data.postId].comments.push({
-        id:data.commentId,
-        content:data.content,
-    }));
-  }
-  if (type == "PostCreated") {
-    console.log("This is hit at postcreated")
 
+  if (type == "CommentCreated") {
+    if (post_with_comments[data.postId]) {
+      post_with_comments[data.postId].comments.push({
+        id: data.commentId,
+        content: data.content,
+        status: data.status,
+      });
+    }
+  }
+
+  if (type == "PostCreated") {
     post_with_comments[data.id] = {
       id: data.id,
       title: data.title,
       comments: [],
     };
-    console.log(post_with_comments);
   }
   res.send({});
 });
