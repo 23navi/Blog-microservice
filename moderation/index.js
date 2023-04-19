@@ -1,4 +1,3 @@
-console.log("moderation service");
 
 const express = require("express");
 const axios = require("axios");
@@ -14,11 +13,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/events", async (req, res) => {
+  
   const { type, data } = req.body;
 
   if (type == "CommentCreated") {
-    const { status, content } = data;
-    status = content.includes("fuck") ? "rejected" : "approved";
+    let { status, content } = data;
+    status = content.toLowerCase().includes("fuck") ? "rejected" : "approved";
 
     await axios.post("http://127.0.0.1:4005/events", {
       type: "CommentModerated",

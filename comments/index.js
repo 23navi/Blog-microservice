@@ -35,10 +35,20 @@ app.post("/posts/:id/comments", (req, res) => {
 });
 
 
-app.post("/events",(req,res)=>{
+app.post("/events",async (req,res)=>{
   //We will listen for CommentModeration event
-  
-  res.send({})
+
+  const { type, data } = req.body;
+
+  if (type == "CommentModerated") {
+    await axios.post("http://127.0.0.1:4005/events", {
+      type: "CommentUpdated",
+      data
+    }).catch(e=>{
+        console.log("error on commentUpdate ");
+    });
+  }
+  res.send({});
 })
 
 
