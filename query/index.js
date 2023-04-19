@@ -31,6 +31,22 @@ app.post("/events", (req, res) => {
       comments: [],
     };
   }
+
+  if (type == "CommentUpdated") {
+    if (post_with_comments[data.postId]) {
+      let comment = post_with_comments[data.postId].comments.find((o, i) => {
+        if (o.id === data.commentId) {
+          post_with_comments[data.postId].comments[i] = {
+            id: data.commentId,
+            content: data.content,
+            status: data.status,
+          };
+          return true;
+        }
+      });
+    }
+  }
+
   res.send({});
 });
 

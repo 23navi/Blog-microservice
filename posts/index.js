@@ -46,7 +46,6 @@ app.post("/posts",(req,res)=>{
 })
 
 app.post("/events",(req,res)=>{
-    console.log(req.body)
     res.send({})
   })
 
