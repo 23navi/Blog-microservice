@@ -1,4 +1,3 @@
-
 const express = require("express");
 const axios = require("axios");
 const bodyParser = require("body-parser");
@@ -13,24 +12,25 @@ app.get("/", (req, res) => {
 });
 
 app.post("/events", async (req, res) => {
-  
   const { type, data } = req.body;
 
   if (type == "CommentCreated") {
     let { status, content } = data;
     status = content.toLowerCase().includes("fuck") ? "rejected" : "approved";
 
-    await axios.post("http://127.0.0.1:4005/events", {
-      type: "CommentModerated",
-      data: {
-        commentId: data.commentId,
-        postId: data.postId,
-        content,
-        status,
-      },
-    }).catch(e=>{
+    await axios
+      .post("http://event-bus-srv:4005/events", {
+        type: "CommentModerated",
+        data: {
+          commentId: data.commentId,
+          postId: data.postId,
+          content,
+          status,
+        },
+      })
+      .catch((e) => {
         console.log("error moderation");
-    });
+      });
   }
   res.send({});
 });

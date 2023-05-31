@@ -18,32 +18,32 @@ app.post("/events", (req, res) => {
     console.log(e.message);
   });
 
-  // //To comments service
-  // axios({
-  //   method: "post",
-  //   url: "http://127.0.0.1:4001/events",
-  //   data: req.body,
-  // }).catch((e) => {
-  //   console.log("error comment");
-  // });
+  //To comments service
+  axios({
+    method: "post",
+    url: "http://comments-clusterip-srv:4001/events",
+    data: req.body,
+  }).catch((e) => {
+    console.log("error comment");
+  });
 
-  // //To query service
-  // axios({
-  //   method: "post",
-  //   url: "http://127.0.0.1:4002/events",
-  //   data: req.body,
-  // }).catch((e) => {
-  //   console.log("error query");
-  // });
+  //To query service
+  axios({
+    method: "post",
+    url: "http://query-clusterip-srv:4002/events",
+    data: req.body,
+  }).catch((e) => {
+    console.log("error query");
+  });
 
-  // //To moderation service
-  // axios({
-  //   method: "post",
-  //   url: "http://127.0.0.1:4003/events",
-  //   data: req.body,
-  // }).catch((e) => {
-  //   console.log("error query");
-  // });
+  //To moderation service
+  axios({
+    method: "post",
+    url: "http://moderation-clusterip-srv:4003/events",
+    data: req.body,
+  }).catch((e) => {
+    console.log("error query");
+  });
 
   res.send("Ok");
 });
