@@ -12,6 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/events", async (req, res) => {
+  console.log("Event received on moderation service");
   const { type, data } = req.body;
 
   if (type == "CommentCreated") {
