@@ -12,6 +12,7 @@ app.get("/posts", (req, res) => {
 });
 
 app.post("/events", (req, res) => {
+  console.log("Event received on Query Service");
   const { type, data } = req.body;
 
   if (type == "CommentCreated") {
