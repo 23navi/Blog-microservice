@@ -7,6 +7,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/events", (req, res) => {
+  console.log("Received Event on event-bus");
   //To post service
   axios({
     method: "post",
