@@ -1,54 +1,48 @@
-const express= require("express");
-const {randomBytes} = require("crypto");
-const bodyParser= require("body-parser");
-const cors= require("cors")
+const express = require("express");
+const { randomBytes } = require("crypto");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const axios = require("axios");
 
-
-const app= express();
+const app = express();
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
-const posts={}
+const posts = {};
 
+app.get("/posts", (req, res) => {
+  res.send(posts);
+});
 
-app.get("/posts",(req,res)=>{
-    res.send(posts);
+app.post("/posts", (req, res) => {
+  const id = randomBytes(4).toString();
+  const { title } = req.body;
+  posts[id] = {
+    title,
+    id,
+  };
 
-})
+  axios({
+    method: "post",
+    url: "http://event-bus-srv:4005/events",
+    data: {
+      type: "PostCreated",
+      data: {
+        id,
+        title,
+      },
+    },
+  }).catch((e) => {
+    console.log("error");
+  });
 
-app.post("/posts",(req,res)=>{
-    const id= randomBytes(4).toString();
-    const {title}= req.body;
-    posts[id]={
-        title,id 
-    }
+  res.status(201).send(posts[id]);
+});
 
-    axios({
-        method: 'post',
-        url: 'http://127.0.0.1:4005/events',
-        data: {
-            type:"PostCreated",
-            data:{
-              id,
-              title,
-            }
-        }
-      }).catch(e=>{
-        console.log("error");
-    });
+app.post("/events", (req, res) => {
+  res.send({});
+});
 
- 
-
-    res.status(201).send(posts[id]);
-
-
-})
-
-app.post("/events",(req,res)=>{
-    res.send({})
-  })
-
-app.listen(4000,()=>{
-    console.log("Posts on port 4000")
-})
+app.listen(4000, () => {
+  console.log("Posts on port 4000");
+});
