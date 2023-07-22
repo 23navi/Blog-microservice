@@ -1,0 +1,57 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: navi23/mini-blog-client
+      context: client
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: navi23/mini-blog-comments
+      context: comments
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: navi23/mini-blog-eventbus
+      context: event-bus
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: navi23/mini-blog-moderation
+      context: moderation
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: navi23/mini-blog-post
+      context: posts
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: navi23/mini-blog-query
+      context: query
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
